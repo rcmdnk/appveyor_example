@@ -1,0 +1,22 @@
+version: 0.1.{build}
+
+artifacts:
+  - path: ./build/test.txt
+    name: Test file
+
+build_script:
+  - cmd: ./bat/build.bat
+
+test_script:
+  - cmd: ./tests/test.bat
+
+deploy:
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  description: ''
+  provider: GitHub
+  auth_token: $(github_access)
+  artifact: 'Test file'
+  draft: false
+  prerelease: false
+  on:
+    APPVEYOR_REPO_TAG: true
